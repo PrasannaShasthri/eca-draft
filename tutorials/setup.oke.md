@@ -109,7 +109,7 @@ Enter the following:
 
 Click Create Virtual Cloud Network.
 
-![alt text](images/setup.oke/016.oci.vcn.details.png)
+![alt text](images/setup.oke/new.oci.vcn.details.png)
 
 ##### Security lists #####
 
