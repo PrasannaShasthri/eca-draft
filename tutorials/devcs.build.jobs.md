@@ -24,7 +24,7 @@ Click Create Repository.
 ![](images/ocir/02.create.repository.png)
 
 Fill out the following:
--	Repository Name: eca-<compartment-name\>
+-	Repository Name: eca-demo
 
 IMPORTANT: REPOSITORY NAME MUST FOLLOW THAT NAMING CONVENTION!!!
 
@@ -64,8 +64,8 @@ Change to Builders tab and define the build steps. Add your first step by clicki
 ![](images/build.jobs/04.build.v1.docker.login.png)
 
 Fill out the following:
--	Registry Host: phx.ocir.io
--	Username: showitbuildit1/aura
+-	Registry Host: iad.ocir.io
+-	Username: <tenancy-name>/api.user
 -	Password: Auth token (distributed by the instructor on cheat sheet - it is NOT Docker password - look for Auth token)
 
 ![](images/build.jobs/05.build.v1.docker.login.details.png)
@@ -75,8 +75,8 @@ Click again the Add Builder and select Docker build.
 ![](images/build.jobs/06.build.v1.docker.build.png)
 
 Fill out the following:
--	Registry Host: phx.ocir.io
--	Image name: showitbuildit1/<repository-name\> (what you created above using the format eca-<compartment-name\>)
+-	Registry Host: iad.ocir.io
+-	Image name: <tenancy-name>/eca-demo (what you created above using the format eca-<compartment-name\>)
 -	Version Tag: 1.0
 - Context Root in Workspace: yes
 - Dockerfile: Dockerfile_V1
@@ -88,8 +88,8 @@ Click again the Add Builder and select Docker push.
 ![](images/build.jobs/08.build.v1.docker.push.png)
 
 Fill out the following:
--	Registry Host: phx.ocir.io
--	Image name: showitbuildit1/<repository-name\> (what you created above using the format eca-<compartment-name\>)
+-	Registry Host: iad.ocir.io
+-	Image name: <tenancy-name>/eca-demo (what you created above using the format eca-<compartment-name\>)
 -	Version Tag: 1.0
 
 ![](images/build.jobs/09.build.v1.docker.push.details.png)
@@ -181,7 +181,7 @@ Copy the following commands to the script text area. Please replace the <cluster
 
     mkdir -p $HOME/.kube
 
-    export ENDPOINT="containerengine.us-phoenix-1.oraclecloud.com"
+    export ENDPOINT="containerengine.us-ashburn-1.oraclecloud.com"
 
     ./get-kubeconfig.sh <cluster-ocid> > $HOME/.kube/config
 
@@ -189,12 +189,12 @@ Copy the following commands to the script text area. Please replace the <cluster
 
 Add another Unix Shell Builder which will execute the service V1 deployment. Copy the following commands into the script area. Don't forget to replace <compartment-name\> and <auth-token\> properly.
 
-    export COMPARTMENT="<compartment-name>"
+    export COMPARTMENT="demo"
     envsubst < kubernetes/ecadraft1.yaml > kubernetes/ecadraft1.final.yaml
 
     cat kubernetes/ecadraft1.final.yaml
 
-    kubectl create secret docker-registry regcred --docker-server=phx.ocir.io --docker-username=showitbuildit1/aura --docker-password=<auth-token> --docker-email=aura@acme.com || echo 'secret exists'
+    kubectl create secret docker-registry regcred --docker-server=iad.ocir.io --docker-username=<tenancy-name>/api.user --docker-password=<auth-token> --docker-email=aura@acme.com || echo 'secret exists'
 
     kubectl apply -f kubernetes/ecadraft1.final.yaml
 
